@@ -21,7 +21,7 @@ export default async function AboutPage() {
           <div className="mt-8 space-y-6 text-lg text-text-muted">
             <p>
               We&apos;re a Lagos-based production team dedicated to pushing the
-              boundaries of creativity and craft — every project we take on is
+              boundaries of creativity and craft. Every project we take on is
               built to be unique, not templated. Storytelling comes first;
               cameras, lighting and edit all exist to capture the essence of a
               client&apos;s vision, not to show off.
@@ -44,7 +44,7 @@ export default async function AboutPage() {
               {team.map((member) => {
                 const photo = isMedia(member.photo) ? member.photo : null;
                 return (
-                  <div key={member.id} className="border border-border bg-surface p-6">
+                  <div key={member.id} className="rounded-2xl bg-surface p-6 shadow-sm">
                     <div className="relative aspect-square overflow-hidden bg-base">
                       {photo?.url ? (
                         <Image

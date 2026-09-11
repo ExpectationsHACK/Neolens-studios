@@ -34,8 +34,12 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
-      // Fail fast instead of hanging requests when DATABASE_URL isn't configured yet.
-      connectionTimeoutMillis: 5000,
+      // Long enough for a real (if occasionally slow) remote pooled connection,
+      // short enough to still fail fast when DATABASE_URL is missing entirely.
+      connectionTimeoutMillis: 15000,
+      // Keep concurrent connections modest against a pooled proxy (e.g. Prisma
+      // Postgres' pooled endpoint) rather than opening one per request.
+      max: 5,
     },
   }),
   sharp,

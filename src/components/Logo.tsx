@@ -1,21 +1,19 @@
 import Link from "next/link";
 
-export function Logo() {
+type Props = {
+  className?: string;
+  /** "light" is for use on red/black backgrounds, where a red "LENS" would disappear. */
+  variant?: "default" | "light";
+};
+
+export function Logo({ className = "text-text", variant = "default" }: Props) {
   return (
     <Link
       href="/"
-      className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-text"
-      aria-label="Neo Lens Studios — home"
+      className={`font-display text-lg font-semibold tracking-tight ${className}`}
+      aria-label="Neo Lens Studios, home"
     >
-      <span
-        aria-hidden
-        className="relative flex h-6 w-6 items-center justify-center rounded-full border border-accent/60"
-      >
-        <span className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
-      </span>
-      <span>
-        NEO <span className="text-accent">LENS</span>
-      </span>
+      NEO <span className={variant === "light" ? "text-white/90" : "text-accent"}>LENS</span>
     </Link>
   );
 }

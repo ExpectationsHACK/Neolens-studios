@@ -47,7 +47,7 @@ export default async function PortalPage() {
       {projects.length > 0 ? (
         <div className="mt-12 space-y-6">
           {projects.map((project) => (
-            <div key={project.id} className="border border-border bg-surface p-6">
+            <div key={project.id} className="rounded-2xl bg-surface p-6 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="font-display text-xl font-medium text-text">{project.title}</h2>
                 <span className="rounded-full border border-accent/50 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-accent">
@@ -91,7 +91,7 @@ export default async function PortalPage() {
       ) : (
         <div className="mt-12 border border-dashed border-border p-10 text-center text-text-muted">
           <p className="text-sm">
-            No projects linked to your account yet — your producer will add
+            No projects linked to your account yet. Your producer will add
             them here once your project kicks off.
           </p>
         </div>

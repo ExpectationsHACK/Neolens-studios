@@ -96,7 +96,7 @@ export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
       {TURNSTILE_SITE_KEY && (
         <>
           <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
-          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark" />
+          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
         </>
       )}
 

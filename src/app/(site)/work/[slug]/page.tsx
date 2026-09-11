@@ -131,8 +131,8 @@ export default async function ProjectPage({ params }: Props) {
               More {categoryLabel}
             </p>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p, i) => (
-                <ProjectCard key={p.id} project={p} index={i} />
+              {related.map((p) => (
+                <ProjectCard key={p.id} project={p} />
               ))}
             </div>
           </div>

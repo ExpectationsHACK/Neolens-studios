@@ -12,12 +12,12 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neolensstudios.com"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${SITE_NAME} — Film & Video Production, Lagos`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${SITE_NAME} | Film & Video Production, Lagos`,
+    template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: `${SITE_NAME} — Film & Video Production, Lagos`,
+    title: `${SITE_NAME} | Film & Video Production, Lagos`,
     description: SITE_DESCRIPTION,
     url: siteUrl,
     siteName: SITE_NAME,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Film & Video Production, Lagos`,
+    title: `${SITE_NAME} | Film & Video Production, Lagos`,
     description: SITE_DESCRIPTION,
   },
 };

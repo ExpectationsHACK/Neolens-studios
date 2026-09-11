@@ -8,13 +8,26 @@ export const NAV_LINKS = [
 ] as const;
 
 export const PROJECT_CATEGORIES = [
-  { value: "documentaries", label: "Documentaries" },
-  { value: "live-production", label: "Live Production" },
-  { value: "corporate-events", label: "Corporate Events" },
-  { value: "brand-content", label: "Brand Content" },
-  { value: "commercials", label: "Commercials" },
-  { value: "video-podcast", label: "Video Podcast" },
+  { value: "documentaries", label: "Documentaries", color: "var(--color-card-indigo)" },
+  { value: "live-production", label: "Live Production", color: "var(--color-card-magenta)" },
+  { value: "corporate-events", label: "Corporate Events", color: "var(--color-card-teal)" },
+  { value: "brand-content", label: "Brand Content", color: "var(--color-card-green)" },
+  { value: "commercials", label: "Commercials", color: "var(--color-card-red)" },
+  { value: "video-podcast", label: "Video Podcast", color: "var(--color-card-violet)" },
 ] as const;
+
+export const CARD_COLORS = [
+  "var(--color-card-red)",
+  "var(--color-card-teal)",
+  "var(--color-card-indigo)",
+  "var(--color-card-magenta)",
+  "var(--color-card-green)",
+  "var(--color-card-violet)",
+] as const;
+
+export function categoryColor(value: string): string {
+  return PROJECT_CATEGORIES.find((c) => c.value === value)?.color ?? "var(--color-card-red)";
+}
 
 export const SITE_NAME = "Neo Lens Studios";
 export const SITE_DESCRIPTION =

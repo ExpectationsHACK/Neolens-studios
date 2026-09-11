@@ -24,28 +24,17 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0b0d10",
+          background: "#ffffff",
           padding: 80,
-          color: "#f4f2ed",
+          color: "#14161a",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              width: 22,
-              height: 22,
-              borderRadius: 999,
-              border: "3px solid #e8a34c",
-              display: "flex",
-            }}
-          />
-          <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: -1, display: "flex" }}>
-            NEO <span style={{ color: "#e8a34c", marginLeft: 10 }}>LENS</span>
-          </div>
+        <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: -1, display: "flex" }}>
+          NEO <span style={{ color: "#e4392e", marginLeft: 10 }}>LENS</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-          <div style={{ fontSize: 22, color: "#e8a34c", textTransform: "uppercase", letterSpacing: 2 }}>
+          <div style={{ fontSize: 22, color: "#e4392e", textTransform: "uppercase", letterSpacing: 2 }}>
             {category}
             {client ? ` · ${client}` : ""}
           </div>

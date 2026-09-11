@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { getAllClients } from "@/lib/data";
 import { isMedia } from "@/types";
+import { CARD_COLORS } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "Clients",
@@ -20,10 +21,15 @@ export default async function ClientsPage() {
 
       {clients.length > 0 ? (
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {clients.map((client) => {
+          {clients.map((client, i) => {
             const logo = isMedia(client.logo) ? client.logo : null;
+            const color = CARD_COLORS[i % CARD_COLORS.length];
             return (
-              <div key={client.id} className="border border-border bg-surface p-8">
+              <div
+                key={client.id}
+                className="rounded-2xl bg-surface p-8 shadow-sm"
+                style={{ borderTop: `4px solid ${color}` }}
+              >
                 <div className="flex h-12 items-center">
                   {logo?.url ? (
                     <Image

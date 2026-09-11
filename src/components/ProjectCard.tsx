@@ -2,21 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/types";
 import { isMedia } from "@/types";
-import { PROJECT_CATEGORIES } from "@/lib/nav";
+import { PROJECT_CATEGORIES, categoryColor } from "@/lib/nav";
 
 function categoryLabel(value: string) {
   return PROJECT_CATEGORIES.find((c) => c.value === value)?.label ?? value;
 }
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+export function ProjectCard({ project }: { project: Project }) {
   const coverImage = isMedia(project.coverImage) ? project.coverImage : null;
+  const color = categoryColor(project.category);
 
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group block overflow-hidden border border-border bg-surface transition-colors hover:border-accent/60"
+      className="group block overflow-hidden rounded-2xl border border-border bg-base shadow-sm transition-shadow hover:shadow-lg"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-base">
+      <div className="relative aspect-[4/3] overflow-hidden bg-surface">
         {coverImage?.url ? (
           <Image
             src={coverImage.url}
@@ -32,18 +33,18 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
             </span>
           </div>
         )}
-        <span className="absolute left-3 top-3 rounded-full bg-base/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-accent backdrop-blur">
-          {String(index + 1).padStart(2, "0")}
-        </span>
       </div>
-      <div className="flex items-start justify-between gap-4 p-4">
-        <div>
-          <h3 className="font-display text-lg font-medium text-text">{project.title}</h3>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-text-muted">
-            {categoryLabel(project.category)}
-            {project.year ? ` · ${project.year}` : ""}
-          </p>
-        </div>
+      <div className="p-4" style={{ borderTop: `3px solid ${color}` }}>
+        <h3 className="font-display text-lg font-medium text-text">{project.title}</h3>
+        <p className="mt-1 flex items-center gap-2 text-xs text-text-muted">
+          <span
+            className="inline-block h-2 w-2 rounded-full"
+            style={{ backgroundColor: color }}
+            aria-hidden="true"
+          />
+          {categoryLabel(project.category)}
+          {project.year ? ` · ${project.year}` : ""}
+        </p>
       </div>
     </Link>
   );

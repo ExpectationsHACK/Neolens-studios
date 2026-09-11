@@ -2,7 +2,7 @@ import { WHATSAPP_NUMBER } from "@/lib/nav";
 
 export function WhatsAppButton() {
   const message = encodeURIComponent(
-    "Hi Neo Lens Studios — I'd like to talk about a project.",
+    "Hi Neo Lens Studios, I'd like to talk about a project.",
   );
 
   return (

@@ -6,14 +6,14 @@ import { CONTACT_EMAIL, CONTACT_PHONE, STUDIO_ADDRESS } from "@/lib/nav";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start a project with Neo Lens Studios — tell us about your project type, budget and timeline.",
+    "Start a project with Neo Lens Studios. Tell us about your project type, budget and timeline.",
 };
 
 type Props = { searchParams: Promise<{ project?: string }> };
 
 export default async function ContactPage({ searchParams }: Props) {
   const { project } = await searchParams;
-  const defaultMessage = project ? `Hi — I'd like something similar to "${project}". ` : undefined;
+  const defaultMessage = project ? `Hi, I'd like something similar to "${project}". ` : undefined;
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
@@ -21,7 +21,7 @@ export default async function ContactPage({ searchParams }: Props) {
         <div>
           <SectionHeading eyebrow="Contact" title="Let's talk today" />
           <p className="mt-6 text-text-muted">
-            Tell us about your project — type, budget and timeline — and
+            Tell us about your project: type, budget and timeline, and
             we&apos;ll get back to you within two working days.
           </p>
           <div className="mt-10 space-y-4 font-mono text-sm">

@@ -51,7 +51,7 @@ export async function submitLead(
   // page trips it. Return a success-shaped response so the bot doesn't learn
   // anything from a distinct error state.
   if (String(formData.get("company_website") || "").trim() !== "") {
-    return { status: "success", message: "Thanks — we'll get back to you within two working days." };
+    return { status: "success", message: "Thanks. We'll get back to you within two working days." };
   }
 
   const name = String(formData.get("name") || "").trim();
@@ -71,7 +71,7 @@ export async function submitLead(
 
   const humanVerified = await verifyTurnstile(turnstileToken, ip);
   if (!humanVerified) {
-    return { status: "error", message: "We couldn't verify you're human — please try again." };
+    return { status: "error", message: "We couldn't verify you're human. Please try again." };
   }
 
   try {
@@ -90,7 +90,7 @@ export async function submitLead(
       if (recent.totalDocs >= RATE_LIMIT_MAX_SUBMISSIONS) {
         return {
           status: "error",
-          message: "You've submitted a few of these already — we'll be in touch on the ones we have.",
+          message: "You've submitted a few of these already. We'll be in touch on the ones we have.",
         };
       }
     }
@@ -135,10 +135,10 @@ export async function submitLead(
           text: [
             `Name: ${name}`,
             `Email: ${email}`,
-            `Phone: ${phone || "—"}`,
-            `Project type: ${projectType || "—"}`,
-            `Budget: ${budgetBand || "—"}`,
-            `Timeline: ${timeline || "—"}`,
+            `Phone: ${phone || "Not provided"}`,
+            `Project type: ${projectType || "Not provided"}`,
+            `Budget: ${budgetBand || "Not provided"}`,
+            `Timeline: ${timeline || "Not provided"}`,
             "",
             message,
           ].join("\n"),
@@ -150,18 +150,18 @@ export async function submitLead(
       await resend.emails.send({
         from: "Neo Lens Studios <hello@neolensstudios.com>",
         to: email,
-        subject: "We got your inquiry — Neo Lens Studios",
+        subject: "We got your inquiry, Neo Lens Studios",
         text: [
           `Hi ${name.split(" ")[0]},`,
           "",
-          "Thanks for reaching out to Neo Lens Studios — we've received your inquiry and will get back to you within two working days.",
+          "Thanks for reaching out to Neo Lens Studios. We've received your inquiry and will get back to you within two working days.",
           "",
           "Here's what you sent us:",
           message,
           "",
           "If anything changes on your end in the meantime (timeline, budget, scope), just reply to this email.",
           "",
-          "— Neo Lens Studios",
+          "Neo Lens Studios",
         ].join("\n"),
       });
     }
@@ -173,6 +173,6 @@ export async function submitLead(
 
   return {
     status: "success",
-    message: "Thanks — we'll get back to you within two working days.",
+    message: "Thanks. We'll get back to you within two working days.",
   };
 }

@@ -1,15 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #0b0d10;
-  --color-surface: #15181c;
-  --color-surface-raised: #1c2024;
-  --color-text: #f4f2ed;
-  --color-text-muted: #9a9d9f;
-  --color-accent: #e8a34c;
-  --color-accent-hover: #f2b76a;
-  --color-teal: #5b7b93;
-  --color-border: #f4f2ed1f;
+  --color-base: #ffffff;
+  --color-surface: #fbebe9;
+  --color-surface-raised: #f6d9d6;
+  --color-text: #14161a;
+  --color-text-muted: #6b7280;
+  --color-accent: #a30000;
+  --color-accent-hover: #7f0000;
+  --color-border: #e5e7eb;
+
+  --color-footer: #0a0a0a;
+  --color-footer-text: #f4f2ed;
+  --color-footer-muted: #9a9da3;
+
+  --color-card-red: #a30000;
+  --color-card-teal: #2a9d8f;
+  --color-card-indigo: #3b5bdb;
+  --color-card-magenta: #d6336c;
+  --color-card-green: #2f9e44;
+  --color-card-violet: #7048e8;
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -17,7 +27,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -29,22 +39,7 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-base);
-}
-
-@keyframes aperture-open {
-  0% {
-    transform: scale(0.5) rotate(-40deg);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-.animate-aperture {
-  animation: aperture-open 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  color: white;
 }
 
 @keyframes fade-up {
@@ -60,6 +55,40 @@ body {
 
 .animate-fade-up {
   animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 32s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 36s linear infinite;
+}
+
+.animate-marquee-slow {
+  animation: marquee-left 55s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

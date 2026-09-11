@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
+import { categoryColor } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -10,15 +11,13 @@ export const metadata: Metadata = {
 
 const SERVICES = [
   {
-    tag: "01",
     slug: "documentaries",
     title: "Documentaries",
     description:
-      "Long-form, character-driven stories built on real research and access — development, production and edit handled end to end.",
+      "Long-form, character-driven stories built on real research and access. Development, production and edit handled end to end.",
     goodFor: "Founder stories, social-impact features, institutional histories.",
   },
   {
-    tag: "02",
     slug: "commercials",
     title: "Commercials",
     description:
@@ -26,7 +25,6 @@ const SERVICES = [
     goodFor: "Product launches, brand campaigns, retail and FMCG spots.",
   },
   {
-    tag: "03",
     slug: "corporate-events",
     title: "Corporate Events",
     description:
@@ -34,7 +32,6 @@ const SERVICES = [
     goodFor: "Conferences, AGMs, product launches, internal comms.",
   },
   {
-    tag: "04",
     slug: "live-production",
     title: "Live Production",
     description:
@@ -42,15 +39,13 @@ const SERVICES = [
     goodFor: "Concerts, award shows, live broadcasts, hybrid events.",
   },
   {
-    tag: "05",
     slug: "brand-content",
     title: "Brand Content",
     description:
-      "Ongoing content series built for a brand's own channels — social-first, consistent in voice, produced on a repeatable cadence.",
-    goodFor: "Always-on social content, brand documentaries, behind-the-scenes series.",
+      "Ongoing content series built for a brand's own channels. Social-first, consistent in voice, produced on a repeatable cadence.",
+    goodFor: "Always-on social content, brand documentaries, behind the scenes series.",
   },
   {
-    tag: "06",
     slug: "video-podcast",
     title: "Video Podcast",
     description:
@@ -68,27 +63,29 @@ export default function ServicesPage() {
         description="Six formats, one process: understand the goal, then build the format around it."
       />
 
-      <div className="mt-14 divide-y divide-border border-y border-border">
-        {SERVICES.map((service) => (
-          <div key={service.slug} className="grid gap-4 py-8 sm:grid-cols-[80px_1fr_1fr]">
-            <span className="font-mono text-xs text-accent">{service.tag}</span>
-            <div>
-              <h2 className="font-display text-xl font-medium text-text">{service.title}</h2>
+      <div className="mt-14 grid gap-4 sm:grid-cols-2">
+        {SERVICES.map((service) => {
+          const color = categoryColor(service.slug);
+          return (
+            <div
+              key={service.slug}
+              className="rounded-2xl bg-base p-8 shadow-sm"
+              style={{ borderTop: `4px solid ${color}` }}
+            >
+              <h2 className="font-display text-xl font-medium" style={{ color }}>
+                {service.title}
+              </h2>
               <p className="mt-2 text-sm text-text-muted">{service.description}</p>
-            </div>
-            <div className="sm:text-right">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-text-muted">
                 Good for
               </p>
-              <p className="mt-1 text-sm text-text-muted sm:ml-auto sm:max-w-xs">
-                {service.goodFor}
-              </p>
+              <p className="mt-1 text-sm text-text-muted">{service.goodFor}</p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      <div className="mt-16 border border-border bg-surface p-10 text-center">
+      <div className="mt-16 rounded-2xl bg-surface p-10 text-center">
         <h2 className="font-display text-2xl font-medium text-text">
           Not sure which format fits?
         </h2>
