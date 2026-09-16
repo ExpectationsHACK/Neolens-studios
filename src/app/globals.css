@@ -1,33 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #ffffff;
-  --color-surface: #fbebe9;
-  --color-surface-raised: #f6d9d6;
-  --color-text: #14161a;
-  --color-text-muted: #6b7280;
-  --color-accent: #a30000;
-  --color-accent-hover: #7f0000;
-  --color-border: #e5e7eb;
+  --color-base: #0b0c0e;
+  --color-surface: #14161a;
+  --color-surface-raised: #1d2026;
+  --color-text: #ffffff;
+  --color-text-muted: #9a9da3;
+  --color-accent: #e5a93c;
+  --color-accent-hover: #d4962b;
+  --color-border: #24272e;
 
-  --color-footer: #0a0a0a;
-  --color-footer-text: #f4f2ed;
-  --color-footer-muted: #9a9da3;
+  --color-footer: #07080a;
+  --color-footer-text: #ffffff;
+  --color-footer-muted: #80838a;
 
-  --color-card-red: #a30000;
-  --color-card-teal: #2a9d8f;
-  --color-card-indigo: #3b5bdb;
-  --color-card-magenta: #d6336c;
-  --color-card-green: #2f9e44;
-  --color-card-violet: #7048e8;
+  --color-card-dark: #121418;
+  --color-card-yellow: #e5a93c;
+  --color-card-gold: #f5b800;
 
-  --font-display: var(--font-display);
+  --font-heading: var(--font-heading);
+  --font-display: var(--font-heading);
   --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
+  --font-mono: var(--font-body);
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -37,9 +35,14 @@ body {
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+  font-weight: 700;
+}
+
 ::selection {
   background: var(--color-accent);
-  color: white;
+  color: #0b0c0e;
 }
 
 @keyframes fade-up {

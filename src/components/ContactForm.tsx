@@ -65,23 +65,26 @@ export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Name" name="name" required />
+        <Field label="Your Name" name="name" required />
+        <Field label="Company / Brand" name="company" />
+      </div>
+      <div className="grid gap-6 sm:grid-cols-2">
         <Field label="Email" name="email" type="email" required />
+        <Field label="Phone Number" name="phone" type="tel" />
       </div>
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Phone" name="phone" type="tel" />
-        <SelectField label="Project type" name="projectType" options={PROJECT_TYPES} />
+        <SelectField label="Project Type" name="projectType" options={PROJECT_TYPES} />
+        <SelectField label="Budget Range" name="budgetBand" options={BUDGET_BANDS} />
       </div>
       <div className="grid gap-6 sm:grid-cols-2">
-        <SelectField label="Budget" name="budgetBand" options={BUDGET_BANDS} />
-        <SelectField label="Timeline" name="timeline" options={TIMELINES} />
+        <SelectField label="Expected Timeline" name="timeline" options={TIMELINES} />
       </div>
       <div>
         <label
           htmlFor="message"
-          className="font-mono text-[11px] uppercase tracking-widest text-text-muted"
+          className="font-body text-xs font-bold uppercase tracking-wider text-accent"
         >
-          Tell us about the project
+          Project Description
         </label>
         <textarea
           id="message"
@@ -89,25 +92,27 @@ export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
           required
           rows={5}
           defaultValue={defaultMessage}
-          className="mt-2 w-full border border-border bg-base p-3 text-text outline-none focus:border-accent"
+          placeholder="Tell us about the project — scope, objectives, reference videos, or key deliverables..."
+          className="mt-2 w-full rounded-xl border border-white/10 bg-surface p-4 font-body text-sm text-white placeholder:text-white/40 outline-none transition-colors focus:border-accent"
         />
       </div>
 
       {TURNSTILE_SITE_KEY && (
         <>
           <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
-          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark" />
         </>
       )}
 
-      {state.status === "error" && <p className="text-sm text-red-400">{state.message}</p>}
+      {state.status === "error" && <p className="text-sm font-semibold text-red-400">{state.message}</p>}
 
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-full bg-accent px-8 py-3 font-mono text-xs uppercase tracking-widest text-base transition-colors hover:bg-accent-hover disabled:opacity-60"
+        className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 font-body text-xs font-semibold uppercase tracking-wider text-black transition-all hover:bg-accent-hover hover:scale-105 disabled:opacity-60 cursor-pointer"
       >
-        {isPending ? "Sending…" : "Send inquiry"}
+        {isPending ? "Sending Inquiry…" : "Start a Project"}
+        <span className="text-sm">→</span>
       </button>
     </form>
   );
@@ -128,16 +133,16 @@ function Field({
     <div>
       <label
         htmlFor={name}
-        className="font-mono text-[11px] uppercase tracking-widest text-text-muted"
+        className="font-body text-xs font-bold uppercase tracking-wider text-accent"
       >
-        {label}
+        {label} {required && <span className="text-accent">*</span>}
       </label>
       <input
         id={name}
         name={name}
         type={type}
         required={required}
-        className="mt-2 w-full border border-border bg-base p-3 text-text outline-none focus:border-accent"
+        className="mt-2 w-full rounded-xl border border-white/10 bg-surface p-3.5 font-body text-sm text-white placeholder:text-white/40 outline-none transition-colors focus:border-accent"
       />
     </div>
   );
@@ -156,7 +161,7 @@ function SelectField({
     <div>
       <label
         htmlFor={name}
-        className="font-mono text-[11px] uppercase tracking-widest text-text-muted"
+        className="font-body text-xs font-bold uppercase tracking-wider text-accent"
       >
         {label}
       </label>
@@ -164,13 +169,13 @@ function SelectField({
         id={name}
         name={name}
         defaultValue=""
-        className="mt-2 w-full border border-border bg-base p-3 text-text outline-none focus:border-accent"
+        className="mt-2 w-full rounded-xl border border-white/10 bg-surface p-3.5 font-body text-sm text-white outline-none transition-colors focus:border-accent"
       >
-        <option value="" disabled>
-          Select…
+        <option value="" disabled className="bg-surface text-white/50">
+          Select option…
         </option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option key={opt.value} value={opt.value} className="bg-surface text-white">
             {opt.label}
           </option>
         ))}

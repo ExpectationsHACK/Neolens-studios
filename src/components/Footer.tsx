@@ -4,26 +4,27 @@ import { CONTACT_EMAIL, CONTACT_PHONE, NAV_LINKS, STUDIO_ADDRESS } from "@/lib/n
 
 export function Footer() {
   return (
-    <footer className="bg-footer text-footer-text">
+    <footer className="border-t border-white/10 bg-[#050505] text-footer-text">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Logo className="text-footer-text" />
-            <p className="mt-4 max-w-xs text-sm text-footer-muted">
-              A Lagos-based film and video production studio. Documentaries,
-              commercials, live production and brand content for local and
-              international clients.
+            <p className="mt-4 max-w-sm font-body text-sm text-footer-muted leading-relaxed">
+              Neo Lens Studios is a Lagos-based film and video production studio creating cinematic films, commercials, documentaries, corporate content, live productions and visual stories.
+            </p>
+            <p className="mt-3 font-body text-xs font-semibold text-accent">
+              Film • Video • Content • Creative — Lagos, Nigeria
             </p>
           </div>
 
           <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-accent">
+            <p className="font-body text-xs font-bold uppercase tracking-wider text-accent">
               Navigate
             </p>
-            <ul className="mt-4 space-y-2 text-sm text-footer-muted">
+            <ul className="mt-4 space-y-2.5 font-body text-sm text-footer-muted">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="hover:text-footer-text">
+                  <Link href={link.href} className="hover:text-white transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -32,28 +33,28 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-accent">
-              Get in touch
+            <p className="font-body text-xs font-bold uppercase tracking-wider text-accent">
+              Contact Us
             </p>
-            <ul className="mt-4 space-y-2 text-sm text-footer-muted">
+            <ul className="mt-4 space-y-2.5 font-body text-sm text-footer-muted">
               <li>
-                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-footer-text">
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white transition-colors">
                   {CONTACT_EMAIL}
                 </a>
               </li>
               <li>
-                <a href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} className="hover:text-footer-text">
+                <a href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} className="hover:text-white transition-colors">
                   {CONTACT_PHONE}
                 </a>
               </li>
               <li>{STUDIO_ADDRESS}</li>
             </ul>
-            <div className="mt-4 flex gap-4 font-mono text-xs uppercase tracking-widest">
+            <div className="mt-6 flex gap-4 font-body text-xs font-semibold uppercase tracking-wider">
               <a
                 href="https://www.instagram.com/filmbydt/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-footer-muted hover:text-accent"
+                className="text-footer-muted hover:text-accent transition-colors"
               >
                 Instagram
               </a>
@@ -61,7 +62,7 @@ export function Footer() {
                 href="https://twitter.com/FilmbyDT"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-footer-muted hover:text-accent"
+                className="text-footer-muted hover:text-accent transition-colors"
               >
                 Twitter
               </a>
@@ -69,11 +70,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-2 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-widest text-footer-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 font-body text-xs text-footer-muted md:flex-row md:items-center md:justify-between">
           <span>© {new Date().getFullYear()} Neo Lens Studios. All rights reserved.</span>
-          <div className="flex items-center gap-4">
-            <Link href="/portal/login" className="hover:text-accent">
-              Client Login
+          <div className="flex items-center gap-6">
+            <Link href="/portal/login" className="hover:text-accent transition-colors">
+              Client Portal
             </Link>
             <span>Lagos, Nigeria</span>
           </div>

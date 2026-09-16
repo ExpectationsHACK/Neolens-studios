@@ -1,22 +1,16 @@
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Manrope, DM_Sans } from "next/font/google";
 
-export const spaceGrotesk = Space_Grotesk({
+export const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "600", "700"],
+  variable: "--font-heading",
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
-export const inter = Inter({
+export const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600"],
   display: "swap",
 });
 
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500"],
-  display: "swap",
-});

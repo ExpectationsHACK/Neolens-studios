@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { spaceGrotesk, inter, jetbrainsMono } from "@/app/fonts";
+import { manrope, dmSans } from "@/app/fonts";
 import "@/app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -47,10 +47,7 @@ const organizationJsonLd = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className={`${manrope.variable} ${dmSans.variable}`}>
       <body className="flex min-h-screen flex-col bg-base font-body text-text antialiased">
         <script
           type="application/ld+json"
