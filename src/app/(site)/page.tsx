@@ -22,7 +22,7 @@ export default async function HomePage() {
       {/* 1. HERO SECTION — Clean wordmark & hero video, paragraph removed as requested */}
       <section className="relative flex h-[85vh] min-h-[520px] w-full items-center justify-center overflow-hidden bg-black">
         <HeroVideo
-          src="/videos/bts/hero-video.MP4"
+          src="/videos/bts/hero-video.mp4"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/45" />
