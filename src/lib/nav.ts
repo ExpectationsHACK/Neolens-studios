@@ -38,4 +38,5 @@ export const CONTACT_PHONE = "+234 814 010 4523";
 export const WHATSAPP_DISPLAY = "+234 816 692 1744";
 export const WHATSAPP_NUMBER = WHATSAPP_DISPLAY.replace(/[^0-9]/g, "");
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+export const INSTAGRAM_URL = "https://www.instagram.com/neolensstudios";
 export const STUDIO_ADDRESS = "2b Kayode Falowo St, Diamond Estate, Lagos";

@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { CONTACT_EMAIL, CONTACT_PHONE, NAV_LINKS, STUDIO_ADDRESS, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/nav";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  INSTAGRAM_URL,
+  NAV_LINKS,
+  STUDIO_ADDRESS,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+} from "@/lib/nav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export function Footer() {
@@ -57,20 +65,12 @@ export function Footer() {
             </ul>
             <div className="mt-6 flex gap-4 font-body text-xs font-semibold uppercase tracking-wider">
               <a
-                href="https://www.instagram.com/filmbydt/"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-footer-muted hover:text-accent transition-colors"
               >
                 Instagram
-              </a>
-              <a
-                href="https://twitter.com/FilmbyDT"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-footer-muted hover:text-accent transition-colors"
-              >
-                Twitter
               </a>
             </div>
           </div>

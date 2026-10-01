@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PointerGlow } from "@/components/PointerGlow";
-import { CONTACT_EMAIL, CONTACT_PHONE, SITE_DESCRIPTION, SITE_NAME } from "@/lib/nav";
+import { CONTACT_EMAIL, CONTACT_PHONE, INSTAGRAM_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/nav";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neolensstudios.com";
 
@@ -38,6 +38,7 @@ const organizationJsonLd = {
   url: siteUrl,
   email: CONTACT_EMAIL,
   telephone: CONTACT_PHONE,
+  sameAs: [INSTAGRAM_URL],
   address: {
     "@type": "PostalAddress",
     streetAddress: "2b Kayode Falowo St, Diamond Estate",
