@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { PointerGlow } from "@/components/PointerGlow";
 import { CONTACT_EMAIL, CONTACT_PHONE, SITE_DESCRIPTION, SITE_NAME } from "@/lib/nav";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neolensstudios.com";
@@ -47,8 +48,13 @@ const organizationJsonLd = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${dmSans.variable}`}>
+    // suppressHydrationWarning: the inline script below adds the `js` class to
+    // <html> before React hydrates.
+    <html lang="en" className={`${manrope.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-base font-body text-text antialiased">
+        {/* Runs before first paint so scroll-reveal content can start hidden
+            without a flash; visitors without JS never get the class. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -57,6 +63,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <PointerGlow />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}

@@ -6,18 +6,21 @@ import { VideoPlayer } from "@/components/VideoPlayer";
 import { getAllClients } from "@/lib/data";
 import { isMedia } from "@/types";
 import { CARD_COLORS } from "@/lib/nav";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Clients",
-  description: "Brands and organizations Neo Lens Studios has produced video for.",
+  description: "Brands and organisations Neo Lens Studios has produced video for.",
 };
+
+export const revalidate = 60;
 
 export default async function ClientsPage() {
   const clients = await getAllClients();
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-20">
-      <SectionHeading eyebrow="Clients" title="Who we've worked with" />
+      <SectionHeading as="h1" eyebrow="Clients" title="Who we've worked with" />
 
       {clients.length > 0 ? (
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
@@ -27,6 +30,7 @@ export default async function ClientsPage() {
             return (
               <div
                 key={client.id}
+                data-reveal
                 className="rounded-2xl bg-surface p-8 shadow-sm"
                 style={{ borderTop: `4px solid ${color}` }}
               >
@@ -83,6 +87,7 @@ export default async function ClientsPage() {
           Become a client
         </Link>
       </div>
+      <ScrollReveal />
     </div>
   );
 }

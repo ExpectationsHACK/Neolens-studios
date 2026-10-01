@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ContactForm } from "@/components/ContactForm";
-import { CONTACT_EMAIL, CONTACT_PHONE, STUDIO_ADDRESS } from "@/lib/nav";
+import { CONTACT_EMAIL, CONTACT_PHONE, STUDIO_ADDRESS, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/nav";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -19,12 +20,12 @@ export default async function ContactPage({ searchParams }: Props) {
     <div className="mx-auto max-w-5xl px-6 py-20">
       <div className="grid gap-16 lg:grid-cols-[1fr_1.3fr]">
         <div>
-          <SectionHeading eyebrow="Contact" title="Let's talk today" />
+          <SectionHeading as="h1" eyebrow="Contact" title="Start a project" />
           <p className="mt-6 text-text-muted">
             Tell us about your project: type, budget and timeline, and
             we&apos;ll get back to you within two working days.
           </p>
-          <div className="mt-10 space-y-4 font-mono text-sm">
+          <div data-reveal className="mt-10 space-y-4 font-mono text-sm">
             <div>
               <p className="text-[11px] uppercase tracking-widest text-accent">Email</p>
               <a href={`mailto:${CONTACT_EMAIL}`} className="text-text hover:text-accent">
@@ -38,6 +39,17 @@ export default async function ContactPage({ searchParams }: Props) {
                 className="text-text hover:text-accent"
               >
                 {CONTACT_PHONE}
+              </a>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-widest text-accent">WhatsApp</p>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text hover:text-accent"
+              >
+                {WHATSAPP_DISPLAY}
               </a>
             </div>
             <div>
@@ -62,8 +74,11 @@ export default async function ContactPage({ searchParams }: Props) {
             </div>
           )}
         </div>
-        <ContactForm defaultMessage={defaultMessage} />
+        <div data-reveal>
+          <ContactForm defaultMessage={defaultMessage} />
+        </div>
       </div>
+      <ScrollReveal />
     </div>
   );
 }

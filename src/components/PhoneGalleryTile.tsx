@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { LazyVideo } from "@/components/LazyVideo";
 import type { Project } from "@/types";
 import { isMedia } from "@/types";
 import { categoryColor } from "@/lib/nav";
@@ -42,14 +43,10 @@ export function PhoneGalleryTile({ project, index }: { project: Project; index: 
     >
       <Link href={`/work/${project.slug}`} className="absolute inset-0 block">
         {video?.url ? (
-          <video
+          <LazyVideo
             ref={videoRef}
             src={video.url}
             poster={cover?.url ?? undefined}
-            autoPlay
-            muted
-            loop
-            playsInline
             className="h-full w-full object-cover"
           />
         ) : cover?.url ? (

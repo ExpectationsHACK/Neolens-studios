@@ -1,52 +1,62 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Script from "next/script";
 import { submitLead, type ContactFormState } from "@/app/(site)/contact/actions";
+import { BUDGET_BANDS, PROJECT_TYPES, TIMELINES, buildLeadWhatsAppUrl, type Option } from "@/lib/leadWhatsApp";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 const initialState: ContactFormState = { status: "idle" };
 
-const PROJECT_TYPES = [
-  { value: "documentary", label: "Documentary" },
-  { value: "commercial", label: "Commercial" },
-  { value: "corporate", label: "Corporate Video" },
-  { value: "live-production", label: "Live Production" },
-  { value: "brand-content", label: "Brand Content" },
-  { value: "video-podcast", label: "Video Podcast" },
-  { value: "other", label: "Other" },
-];
-
-const BUDGET_BANDS = [
-  { value: "under-1m", label: "Under ₦1,000,000" },
-  { value: "1m-5m", label: "₦1,000,000 – ₦5,000,000" },
-  { value: "5m-15m", label: "₦5,000,000 – ₦15,000,000" },
-  { value: "above-15m", label: "Above ₦15,000,000" },
-  { value: "not-sure", label: "Not sure yet" },
-];
-
-const TIMELINES = [
-  { value: "asap", label: "ASAP" },
-  { value: "1-month", label: "Within 1 month" },
-  { value: "1-3-months", label: "1–3 months" },
-  { value: "exploring", label: "Just exploring" },
-];
-
 export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
   const [state, formAction, isPending] = useActionState(submitLead, initialState);
+  const [whatsAppUrl, setWhatsAppUrl] = useState<string | null>(null);
+
+  // Runs inside the submit click, so the browser allows the new tab. The
+  // server action still saves the lead afterwards as a backup record.
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    if (String(new FormData(form).get("company_website") || "").trim() !== "") return;
+    const url = buildLeadWhatsAppUrl(new FormData(form));
+    setWhatsAppUrl(url);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 
   if (state.status === "success") {
+    // `whatsAppUrl` is only set when this page's script opened WhatsApp on
+    // submit. If the visitor submitted before the script loaded, the server's
+    // copy of the link is the only way their details reach WhatsApp.
+    const opened = whatsAppUrl !== null;
+    const link = whatsAppUrl ?? state.whatsAppUrl;
     return (
-      <div className="border border-accent/40 bg-surface p-8 text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">Sent</p>
-        <p className="mt-2 text-text">{state.message}</p>
+      <div className="rounded-2xl border border-accent/40 bg-surface p-8 text-center">
+        <p className="font-mono text-xs uppercase tracking-widest text-accent">
+          {opened ? "Almost there" : "One last step"}
+        </p>
+        <p className="mt-2 text-text">
+          {opened
+            ? "We've opened WhatsApp with your project details. Tap send there so they reach us."
+            : "Send your project details to us on WhatsApp to finish."}{" "}
+          {state.message}
+        </p>
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-body text-xs font-semibold uppercase tracking-wider text-black transition-transform hover:scale-105"
+          >
+            {opened ? "WhatsApp didn't open? Send it here" : "Send on WhatsApp"}{" "}
+            <span className="link-arrow">→</span>
+          </a>
+        )}
       </div>
     );
   }
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form action={formAction} onSubmit={handleSubmit} className="space-y-6">
       {/* Honeypot — hidden from real visitors via off-screen positioning
           (not display:none, which some bots know to skip), never filled by
           a human. See src/app/(site)/contact/actions.ts. */}
@@ -104,7 +114,19 @@ export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
         </>
       )}
 
-      {state.status === "error" && <p className="text-sm font-semibold text-red-400">{state.message}</p>}
+      {state.status === "error" && (
+        <p className="text-sm font-semibold text-red-400">
+          {state.message}
+          {state.whatsAppUrl && (
+            <>
+              {" "}
+              <a href={state.whatsAppUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                Send it on WhatsApp
+              </a>
+            </>
+          )}
+        </p>
+      )}
 
       <button
         type="submit"
@@ -112,8 +134,11 @@ export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
         className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 font-body text-xs font-semibold uppercase tracking-wider text-black transition-all hover:bg-accent-hover hover:scale-105 disabled:opacity-60 cursor-pointer"
       >
         {isPending ? "Sending Inquiry…" : "Start a Project"}
-        <span className="text-sm">→</span>
+        <span className="link-arrow text-sm">→</span>
       </button>
+      <p className="font-body text-xs text-text-muted">
+        Submitting opens WhatsApp with your details filled in. Just tap send.
+      </p>
     </form>
   );
 }
@@ -155,7 +180,7 @@ function SelectField({
 }: {
   label: string;
   name: string;
-  options: { value: string; label: string }[];
+  options: Option[];
 }) {
   return (
     <div>

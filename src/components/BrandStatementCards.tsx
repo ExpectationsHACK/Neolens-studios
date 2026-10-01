@@ -1,47 +1,49 @@
+// Text colours per card background. The gold card uses black text: white on
+// the accent gold is only ~2:1 contrast.
+const TONES = {
+  night: { mark: "light", sub: "text-white/70", heading: "text-white", footer: "text-white" },
+  gold: { mark: "ink", sub: "text-black/60", heading: "text-black", footer: "text-black" },
+  outline: { mark: "accent", sub: "text-text-muted", heading: "text-text", footer: "text-accent" },
+} as const;
+
 const CARDS = [
   {
     bg: "bg-footer",
+    tone: "night" as const,
     pattern: "waves" as const,
-    heading: (
-      <>
-        Moving stories forward,
-        <br />
-        without losing the truth.
-      </>
-    ),
-    sub: "Craft first",
+    heading: "Script, crew, shoot and edit. One team.",
+    sub: "End to end",
   },
   {
     bg: "bg-accent",
+    tone: "gold" as const,
     pattern: "rings" as const,
-    heading: <>The leading independent production studio in Lagos.</>,
-    sub: "Est. in Lagos",
+    heading: "An independent film studio based in Lagos.",
+    sub: "On location & in studio",
   },
   {
     bg: "bg-base border border-border",
+    tone: "outline" as const,
     pattern: "grid" as const,
-    dark: true,
-    heading: (
-      <>
-        8+ stories told.
-        <br />
-        One studio built to tell yours next.
-      </>
-    ),
-    sub: "Now booking",
+    heading: "Now booking. We reply within two working days.",
+    sub: "Availability",
   },
 ];
 
-function Mark({ light = false }: { light?: boolean }) {
+const MARK_COLORS = {
+  light: ["bg-white", "bg-white/50"],
+  ink: ["bg-black", "bg-black/40"],
+  accent: ["bg-accent", "bg-accent/50"],
+} as const;
+
+function Mark({ color }: { color: keyof typeof MARK_COLORS }) {
+  const [solid, faded] = MARK_COLORS[color];
   return (
-    <div
-      className={`grid w-fit grid-cols-2 gap-1 ${light ? "opacity-90" : "opacity-80"}`}
-      aria-hidden="true"
-    >
-      <span className={`h-2.5 w-2.5 ${light ? "bg-white" : "bg-accent"}`} />
-      <span className={`h-2.5 w-2.5 ${light ? "bg-white/50" : "bg-accent/50"}`} />
-      <span className={`h-2.5 w-2.5 ${light ? "bg-white/50" : "bg-accent/50"}`} />
-      <span className={`h-2.5 w-2.5 ${light ? "bg-white" : "bg-accent"}`} />
+    <div className="grid w-fit grid-cols-2 gap-1 opacity-90" aria-hidden="true">
+      <span className={`h-2.5 w-2.5 ${solid}`} />
+      <span className={`h-2.5 w-2.5 ${faded}`} />
+      <span className={`h-2.5 w-2.5 ${faded}`} />
+      <span className={`h-2.5 w-2.5 ${solid}`} />
     </div>
   );
 }
@@ -51,7 +53,7 @@ function Pattern({ variant }: { variant: "waves" | "rings" | "grid" }) {
     return (
       <svg
         viewBox="0 0 300 400"
-        className="absolute inset-0 h-full w-full opacity-25"
+        className="pattern-drift absolute inset-0 h-full w-full opacity-25"
         preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
       >
@@ -75,12 +77,13 @@ function Pattern({ variant }: { variant: "waves" | "rings" | "grid" }) {
     return (
       <svg
         viewBox="0 0 300 400"
-        className="absolute inset-0 h-full w-full opacity-30"
+        className="pattern-ripple absolute inset-0 h-full w-full opacity-30"
         aria-hidden="true"
       >
-        {[40, 80, 120, 160, 200].map((r) => (
+        {[40, 80, 120, 160, 200].map((r, i) => (
           <circle
             key={r}
+            style={{ "--i": i } as React.CSSProperties}
             cx="250"
             cy="60"
             r={r}
@@ -107,38 +110,33 @@ function Pattern({ variant }: { variant: "waves" | "rings" | "grid" }) {
 export function BrandStatementCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
-      {CARDS.map((card, i) => (
-        <div
-          key={i}
-          className={`relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-2xl p-6 ${card.bg}`}
-        >
-          <Pattern variant={card.pattern} />
-          <div className="relative z-10 flex items-center justify-between">
-            <Mark light={!card.dark} />
-            <span
-              className={`font-mono text-[10px] uppercase tracking-widest ${
-                card.dark ? "text-text-muted" : "text-white/70"
-              }`}
+      {CARDS.map((card, i) => {
+        const tone = TONES[card.tone];
+        return (
+          <div
+            key={i}
+            data-reveal
+            data-glow
+            className={`relative flex aspect-[5/4] transition-transform duration-500 ease-out hover:-translate-y-1.5 flex-col justify-between overflow-hidden rounded-2xl p-5 sm:p-4 md:p-5 lg:p-6 ${card.bg}`}
+          >
+            <Pattern variant={card.pattern} />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <Mark color={tone.mark} />
+              <span className={`text-right font-mono text-[10px] uppercase tracking-widest ${tone.sub}`}>
+                {card.sub}
+              </span>
+            </div>
+            <p
+              className={`relative z-10 font-display text-2xl font-extrabold leading-[1.1] tracking-tight sm:text-[1rem] md:text-xl lg:text-2xl xl:text-3xl ${tone.heading}`}
             >
-              {card.sub}
-            </span>
+              {card.heading}
+            </p>
+            <p className={`relative z-10 font-mono text-xs font-bold uppercase tracking-widest ${tone.footer}`}>
+              Neo Lens Studios
+            </p>
           </div>
-          <p
-            className={`relative z-10 font-display text-2xl font-extrabold leading-[1.1] tracking-tight sm:text-3xl ${
-              card.dark ? "text-text" : "text-white"
-            }`}
-          >
-            {card.heading}
-          </p>
-          <p
-            className={`relative z-10 font-mono text-xs font-bold uppercase tracking-widest ${
-              card.dark ? "text-accent" : "text-white"
-            }`}
-          >
-            Neo Lens Studios
-          </p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

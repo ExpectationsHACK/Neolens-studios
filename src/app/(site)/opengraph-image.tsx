@@ -14,21 +14,21 @@ export default function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#ffffff",
+          background: "#0b0c0e",
           padding: 80,
-          color: "#14161a",
+          color: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >
         <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: -1, display: "flex" }}>
-          NEO <span style={{ color: "#e4392e", marginLeft: 10 }}>LENS</span>
+          NEO <span style={{ color: "#e5a93c", marginLeft: 10 }}>LENS</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ fontSize: 66, fontWeight: 700, lineHeight: 1.05, maxWidth: 920 }}>
             Film & video production, Lagos
           </div>
-          <div style={{ fontSize: 26, color: "#6b7280" }}>
-            Documentaries · Commercials · Corporate · Live Production · Brand Content
+          <div style={{ fontSize: 26, color: "#9a9da3" }}>
+            Commercials · Documentaries · Events · Live broadcasts · Podcasts · Photography
           </div>
         </div>
       </div>

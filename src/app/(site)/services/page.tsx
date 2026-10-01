@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LazyVideo } from "@/components/LazyVideo";
 import { ALL_SERVICES } from "@/lib/servicesData";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -12,7 +14,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-base py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div data-reveal className="text-center max-w-3xl mx-auto mb-16">
           <p className="font-body text-xs font-bold uppercase tracking-widest text-accent mb-2">
             WHAT WE DO
           </p>
@@ -29,17 +31,16 @@ export default function ServicesPage() {
           {ALL_SERVICES.map((service) => (
             <div
               key={service.id}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-surface p-8 transition-all duration-300 hover:border-accent/60 hover:bg-surface-raised shadow-xl"
+              id={service.id}
+              data-reveal
+              data-glow
+              className="group relative flex scroll-mt-28 flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-surface p-8 transition-all duration-300 hover:border-accent/60 hover:bg-surface-raised shadow-xl"
             >
               <div>
                 <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-black mb-6">
-                  <video
+                  <LazyVideo
                     src={service.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
+                    aria-hidden="true"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -89,13 +90,13 @@ export default function ServicesPage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-20 rounded-2xl border border-white/10 bg-surface-raised p-10 text-center relative overflow-hidden">
+        <div data-reveal="scale" className="mt-20 rounded-2xl border border-white/10 bg-surface-raised p-10 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
           <h2 className="font-heading text-2xl font-extrabold text-white sm:text-3xl">
-            Not sure which format fits your goals?
+            Not sure which format you need?
           </h2>
           <p className="mt-3 font-body text-base text-text-muted max-w-xl mx-auto">
-            Tell us your idea and budget, and our creative team will recommend the right format and production strategy.
+            Send us your goal and budget, and we&apos;ll recommend a format and a production plan.
           </p>
           <div className="mt-8">
             <Link
@@ -108,6 +109,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </div>
+      <ScrollReveal />
     </div>
   );
 }

@@ -1,5 +1,6 @@
+import { cache } from "react";
 import { getCachedPayload } from "@/lib/payload";
-import type { BlogPost, Client, Project, TeamMember } from "@/types";
+import type { Client, Project, TeamMember } from "@/types";
 
 /**
  * The DB may not be configured yet (fresh checkout, missing DATABASE_URL),
@@ -15,12 +16,12 @@ async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 }
 
 // Local API calls default to overrideAccess: true, which would bypass the
-// draft-vs-published read restriction defined on Projects/BlogPosts — so
+// draft-vs-published read restriction defined on Projects — so
 // every public-facing query below filters explicitly by `_status` itself
 // rather than relying on collection-level access control.
 const PUBLISHED = { _status: { equals: "published" } };
 
-export async function getFeaturedProjects(limit = 6): Promise<Project[]> {
+async function getFeaturedProjectsUncached(limit = 6): Promise<Project[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -34,7 +35,7 @@ export async function getFeaturedProjects(limit = 6): Promise<Project[]> {
   }, []);
 }
 
-export async function getAllProjects(): Promise<Project[]> {
+async function getAllProjectsUncached(): Promise<Project[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -48,7 +49,7 @@ export async function getAllProjects(): Promise<Project[]> {
   }, []);
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
+async function getProjectBySlugUncached(slug: string): Promise<Project | null> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -61,7 +62,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
   }, null);
 }
 
-export async function getRelatedProjects(category: string, excludeSlug: string, limit = 3) {
+async function getRelatedProjectsUncached(category: string, excludeSlug: string, limit = 3) {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -82,7 +83,7 @@ export async function getRelatedProjects(category: string, excludeSlug: string, 
  * even before it's published to the public /work page. Scoping to the
  * caller's own client id happens in the portal page before this is called.
  */
-export async function getClientProjects(clientId: string): Promise<Project[]> {
+async function getClientProjectsUncached(clientId: string): Promise<Project[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -98,7 +99,7 @@ export async function getClientProjects(clientId: string): Promise<Project[]> {
   }, []);
 }
 
-export async function getFeaturedClients(): Promise<Client[]> {
+async function getFeaturedClientsUncached(): Promise<Client[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -111,7 +112,7 @@ export async function getFeaturedClients(): Promise<Client[]> {
   }, []);
 }
 
-export async function getAllClients(): Promise<Client[]> {
+async function getAllClientsUncached(): Promise<Client[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({ collection: "clients", depth: 1, limit: 100 });
@@ -119,7 +120,7 @@ export async function getAllClients(): Promise<Client[]> {
   }, []);
 }
 
-export async function getTeamMembers(): Promise<TeamMember[]> {
+async function getTeamMembersUncached(): Promise<TeamMember[]> {
   return safe(async () => {
     const payload = await getCachedPayload();
     const result = await payload.find({
@@ -132,29 +133,13 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
   }, []);
 }
 
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  return safe(async () => {
-    const payload = await getCachedPayload();
-    const result = await payload.find({
-      collection: "blog-posts",
-      where: PUBLISHED,
-      depth: 1,
-      limit: 50,
-      sort: "-publishedDate",
-    });
-    return result.docs as unknown as BlogPost[];
-  }, []);
-}
-
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  return safe(async () => {
-    const payload = await getCachedPayload();
-    const result = await payload.find({
-      collection: "blog-posts",
-      where: { and: [{ slug: { equals: slug } }, PUBLISHED] },
-      depth: 2,
-      limit: 1,
-    });
-    return (result.docs[0] as unknown as BlogPost) ?? null;
-  }, null);
-}
+// React cache() dedupes identical calls within one render, e.g. a page and
+// its generateMetadata both asking for the same project.
+export const getFeaturedProjects = cache(getFeaturedProjectsUncached);
+export const getAllProjects = cache(getAllProjectsUncached);
+export const getProjectBySlug = cache(getProjectBySlugUncached);
+export const getRelatedProjects = cache(getRelatedProjectsUncached);
+export const getClientProjects = cache(getClientProjectsUncached);
+export const getFeaturedClients = cache(getFeaturedClientsUncached);
+export const getAllClients = cache(getAllClientsUncached);
+export const getTeamMembers = cache(getTeamMembersUncached);

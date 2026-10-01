@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getAllProjects, getBlogPosts } from "@/lib/data";
+import { getAllProjects } from "@/lib/data";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neolensstudios.com";
 
+// Rebuild hourly so newly published projects get listed.
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [projects, posts] = await Promise.all([getAllProjects(), getBlogPosts()]);
+  const projects = await getAllProjects();
 
   const staticRoutes = [
     "",
@@ -12,7 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
     "/services",
     "/clients",
-    "/journal",
     "/contact",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
@@ -24,10 +26,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
-  const postRoutes = posts.map((p) => ({
-    url: `${siteUrl}/journal/${p.slug}`,
-    lastModified: p.publishedDate ? new Date(p.publishedDate) : new Date(),
-  }));
-
-  return [...staticRoutes, ...projectRoutes, ...postRoutes];
+  return [...staticRoutes, ...projectRoutes];
 }

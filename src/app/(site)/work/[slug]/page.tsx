@@ -4,11 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { ProjectCard } from "@/components/ProjectCard";
-import { getProjectBySlug, getRelatedProjects } from "@/lib/data";
+import { getAllProjects, getProjectBySlug, getRelatedProjects } from "@/lib/data";
 import { isMedia } from "@/types";
 import { PROJECT_CATEGORIES } from "@/lib/nav";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export const revalidate = 60;
+
+// Pre-build every published project; new ones render on first visit.
+export async function generateStaticParams() {
+  const projects = await getAllProjects();
+  return projects.map((project) => ({ slug: project.slug }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

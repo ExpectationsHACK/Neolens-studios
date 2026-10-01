@@ -29,7 +29,9 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`relative py-1 text-sm font-medium transition-colors ${
-                  active ? "text-white" : "text-white/70 hover:text-white"
+                  active
+                    ? "text-white"
+                    : "text-white/70 after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-white/40 after:transition-transform after:duration-300 hover:text-white hover:after:scale-x-100"
                 }`}
               >
                 {link.label}
@@ -46,7 +48,7 @@ export function Header() {
           className="hidden items-center gap-2 rounded-full border border-white/30 bg-white/5 px-6 py-2.5 font-body text-xs font-semibold uppercase tracking-wider text-white transition-all hover:border-accent hover:bg-accent hover:text-black md:inline-flex"
         >
           Get in Touch
-          <span className="text-base leading-none">→</span>
+          <span className="link-arrow leading-none">→</span>
         </Link>
 
         <button
@@ -65,6 +67,11 @@ export function Header() {
           />
         </button>
       </div>
+
+      <span
+        aria-hidden="true"
+        className="scroll-progress absolute inset-x-0 bottom-0 hidden h-px bg-accent"
+      />
 
       {open && (
         <nav

@@ -21,7 +21,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
           onClick={() => setActive("all")}
           className={`rounded-full border px-4 py-2 transition-colors ${
             active === "all"
-              ? "border-text bg-text text-base"
+              ? "border-text bg-text text-black"
               : "border-border text-text-muted hover:text-text"
           }`}
         >
@@ -36,7 +36,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
               onClick={() => setActive(cat.value)}
               style={
                 isActive
-                  ? { borderColor: cat.color, backgroundColor: cat.color, color: "white" }
+                  ? { borderColor: cat.color, backgroundColor: cat.color, color: "black" }
                   : undefined
               }
               className={`rounded-full border px-4 py-2 transition-colors ${

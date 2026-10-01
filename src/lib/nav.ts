@@ -3,7 +3,6 @@ export const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/clients", label: "Clients" },
-  { href: "/journal", label: "Journal" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -34,5 +33,9 @@ export const SITE_DESCRIPTION =
   "Neo Lens Studios is a Lagos-based film and video production company crafting documentaries, commercials, corporate films, live production and brand content for local and international clients.";
 export const CONTACT_EMAIL = "hello@neolensstudios.com";
 export const CONTACT_PHONE = "+234 814 010 4523";
-export const WHATSAPP_NUMBER = CONTACT_PHONE.replace(/[^0-9]/g, "");
+// Every WhatsApp link on the site (floating button, contact details, footer)
+// and the "Start a project" form hand-off go to this number.
+export const WHATSAPP_DISPLAY = "+234 816 692 1744";
+export const WHATSAPP_NUMBER = WHATSAPP_DISPLAY.replace(/[^0-9]/g, "");
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const STUDIO_ADDRESS = "2b Kayode Falowo St, Diamond Estate, Lagos";

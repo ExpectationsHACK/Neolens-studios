@@ -3,10 +3,13 @@
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { getCachedPayload } from "@/lib/payload";
+import { buildLeadWhatsAppUrl } from "@/lib/leadWhatsApp";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message?: string;
+  /** The submission pre-filled as a WhatsApp chat to the studio. */
+  whatsAppUrl?: string;
 };
 
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
@@ -116,7 +119,8 @@ export async function submitLead(
     console.error("[contact] failed to save lead:", error);
     return {
       status: "error",
-      message: "Something went wrong saving your inquiry. Please email us directly.",
+      message: "We couldn't save your enquiry on our side.",
+      whatsAppUrl: buildLeadWhatsAppUrl(formData),
     };
   }
 
@@ -174,5 +178,6 @@ export async function submitLead(
   return {
     status: "success",
     message: "Thanks. We'll get back to you within two working days.",
+    whatsAppUrl: buildLeadWhatsAppUrl(formData),
   };
 }

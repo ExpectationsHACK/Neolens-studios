@@ -1,23 +1,24 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { CONTACT_EMAIL, CONTACT_PHONE, NAV_LINKS, STUDIO_ADDRESS } from "@/lib/nav";
+import { CONTACT_EMAIL, CONTACT_PHONE, NAV_LINKS, STUDIO_ADDRESS, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/nav";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#050505] text-footer-text">
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
+          <div data-reveal>
             <Logo className="text-footer-text" />
             <p className="mt-4 max-w-sm font-body text-sm text-footer-muted leading-relaxed">
-              Neo Lens Studios is a Lagos-based film and video production studio creating cinematic films, commercials, documentaries, corporate content, live productions and visual stories.
+              Film and video production in Lagos: commercials, documentaries, corporate and event films, live broadcasts, video podcasts and photography.
             </p>
             <p className="mt-3 font-body text-xs font-semibold text-accent">
-              Film • Video • Content • Creative — Lagos, Nigeria
+              Lagos, Nigeria · Local and international clients
             </p>
           </div>
 
-          <div>
+          <div data-reveal>
             <p className="font-body text-xs font-bold uppercase tracking-wider text-accent">
               Navigate
             </p>
@@ -32,7 +33,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div data-reveal>
             <p className="font-body text-xs font-bold uppercase tracking-wider text-accent">
               Contact Us
             </p>
@@ -45,6 +46,11 @@ export function Footer() {
               <li>
                 <a href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} className="hover:text-white transition-colors">
                   {CONTACT_PHONE}
+                </a>
+              </li>
+              <li>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  WhatsApp: {WHATSAPP_DISPLAY}
                 </a>
               </li>
               <li>{STUDIO_ADDRESS}</li>
@@ -80,6 +86,7 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <ScrollReveal />
     </footer>
   );
 }
